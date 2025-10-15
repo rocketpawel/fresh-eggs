@@ -8,8 +8,52 @@
 # ==============================================================================
 
 # --- Variabili Globali ---
-LAST_RELEASE="25.10.9"
+DEFAULT_RELEASE="25.10.9"
 URL_BASE="https://penguins-eggs.net/basket/packages"
+
+# Parse command-line arguments
+function show_usage {
+    echo "Usage: $0 [OPTIONS]"
+    echo ""
+    echo "Universal installer for penguins-eggs"
+    echo ""
+    echo "OPTIONS:"
+    echo "  -r, --release VERSION    Specify the release version to install (default: $DEFAULT_RELEASE)"
+    echo "  -h, --help              Show this help message and exit"
+    echo ""
+    echo "EXAMPLES:"
+    echo "  $0                      # Install the default release ($DEFAULT_RELEASE)"
+    echo "  $0 -r 25.10.8           # Install a specific older release"
+    echo "  $0 --release 25.9.0     # Install using long option format"
+    echo ""
+}
+
+# Initialize LAST_RELEASE with default value
+LAST_RELEASE="$DEFAULT_RELEASE"
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -r|--release)
+            if [[ -z "$2" || "$2" == -* ]]; then
+                echo "Error: --release option requires a version argument" >&2
+                show_usage
+                exit 1
+            fi
+            LAST_RELEASE="$2"
+            shift 2
+            ;;
+        -h|--help)
+            show_usage
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1" >&2
+            show_usage
+            exit 1
+            ;;
+    esac
+done
 
 source ./ensure-node18.sh
 source ./prepare_pkgs.sh
@@ -19,6 +63,7 @@ function title {
     echo "====================================="
     echo "UNIVERSAL INSTALLER FOR penguins-eggs" 
     echo "====================================="
+    echo "Release version: $LAST_RELEASE"
     echo ""
 }
 

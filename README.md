@@ -25,11 +25,34 @@ Thanks you!
 
 # USAGE
 
+## Basic Installation (Latest Release)
+
 * `git clone https://github.com/pieroproietti/fresh-eggs`
 * `cd fresh-eggs`
-* `sudo ./fresh-eggs`
+* `sudo ./fresh-eggs.sh`
 
 And follow instructions.
+
+## Advanced Usage
+
+The script now supports installing specific release versions:
+
+```bash
+# Show help and available options
+./fresh-eggs.sh --help
+
+# Install the default/latest release
+sudo ./fresh-eggs.sh
+
+# Install a specific older release
+sudo ./fresh-eggs.sh --release 25.10.8
+sudo ./fresh-eggs.sh -r 25.9.0
+```
+
+This is useful when you need to:
+- Install an older version for compatibility reasons
+- Test a specific release
+- Roll back to a previous version
 
 # [SUPPORTED DISTROS](./SUPPORTED-DISTROS.md)
 
